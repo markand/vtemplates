@@ -36,10 +36,9 @@ COMMON_ESP32_DIR        ::= $(TOP)/zephyr/common/esp32
 DISTDIR                 ::= $(TOP)/dist/zephyr/$(BOARD)
 
 .PHONY: all
-all: zephyr-all
+all: zephyr-boilerplate zephyr-cmake-presets esp32-tasks
 	mkdir -p $(DISTDIR)/.vscode
 	mkdir -p $(DISTDIR)/svd
-	cp $(COMMON_ESP32_DIR)/.vscode/tasks.json $(DISTDIR)/.vscode/tasks.json
 	sed < $(COMMON_ESP32_DIR)/.vscode/launch.json > $(DISTDIR)/.vscode/launch.json \
 		-e "s,@ESP32_ADAPTER_SPEED@,$(ESP32_ADAPTER_SPEED),g" \
 		-e "s,@ESP32_APPIMAGE_OFFSET@,$(ESP32_APPIMAGE_OFFSET),g" \
@@ -51,5 +50,12 @@ all: zephyr-all
 		-e "s,@ESP32_SRAM_START@,$(ESP32_SRAM_START),g" \
 		-e "s,@ESP32_TRIPLE@,$(ESP32_TRIPLE),g"
 	cp svd/$(ESP32_CHIP).svd $(DISTDIR)/svd
+
+esp32-tasks-pre: zephyr-tasks-pre
+	cat $(COMMON_ESP32_DIR)/.vscode/tasks.extra.json >> $(DISTDIR)/.vscode/tasks.json
+
+esp32-tasks-post: esp32-tasks-pre zephyr-tasks-post
+
+esp32-tasks: esp32-tasks-post
 
 include $(TOP)/mk/zephyr.mk

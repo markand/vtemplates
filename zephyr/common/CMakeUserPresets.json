@@ -7,13 +7,15 @@
         {
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
-                "BOARD": "@BOARD@"
+                "BOARD": "@BOARD@",
+                "NO_BUILD_TYPE_WARNINGS": "On"
             },
             "environment": {
-                "PATH": "$env{HOME}/zephyrproject/.venv/bin:$penv{PATH}",
-                "ZEPHYR_BASE": "$env{HOME}/zephyrproject/zephyr",
-                "ZEPHYR_SDK_INSTALL_DIR": "$env{HOME}/zephyr-sdk"
+                "PATH": "@PATH@",
+                "ZEPHYR_BASE": "@ZEPHYR_BASE@",
+                "ZEPHYR_SDK_INSTALL_DIR": "@ZEPHYR_SDK_INSTALL_DIR@"
             },
+            "generator": "@CMAKE_GENERATOR@",
             "name": "Zephyr"
         }
     ],

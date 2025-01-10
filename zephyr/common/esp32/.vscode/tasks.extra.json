@@ -1,0 +1,13 @@
+        {
+            "args": [
+                "espressif",
+                "monitor"
+            ],
+            "command": "west",
+            "label": "zephyr: espressif monitor",
+            "presentation": {
+                "focus": true
+            },
+            "problemMatcher": [],
+            "type": "shell"
+        },
