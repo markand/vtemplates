@@ -1,0 +1,47 @@
+{
+    "configurations": [
+        {
+            "configFiles": [
+                "board/@ESP32_CHIP@-builtin.cfg"
+            ],
+            "cwd": "${workspaceFolder}",
+            "debuggerArgs": [
+                "-q"
+            ],
+            "executable": "./build/zephyr/zephyr.elf",
+            "gdbPath": "${env:HOME}/zephyr-sdk/@ESP32_TRIPLE@/bin/@ESP32_TRIPLE@-gdb",
+            "name": "Debug (zephyr/@ESP32_CHIP@)",
+            "openOCDLaunchCommands": [
+                "init",
+                "halt",
+                "esp appimage_offset @ESP32_APPIMAGE_OFFSET@"
+            ],
+            "openOCDPreConfigLaunchCommands": [
+                "set ESP_RTOS Zephyr",
+                "set ESP_ONLYCPU 1",
+                "adapter speed @ESP32_ADAPTER_SPEED@"
+            ],
+            "overrideLaunchCommands": [
+                "monitor program_esp ./build/zephyr/zephyr.bin 0x00 compress"
+            ],
+            "preLaunchCommands": [
+                "set arch riscv:rv32",
+                "set remote hardware-watchpoint-limit 2",
+                "set remotetimeout 60",
+                "mem @ESP32_FLASH_START@ @ESP32_FLASH_END@ ro",
+                "mem @ESP32_SRAM_START@ @ESP32_SRAM_END@ rw",
+                "monitor reset halt",
+                "maint flush register-cache"
+            ],
+            "request": "launch",
+            "rtos": "Zephyr",
+            "runToEntryPoint": "main",
+            "serverpath": "@ESP32_OPENOCD@",
+            "servertype": "openocd",
+            "svdFile": "${workspaceFolder}/svd/@ESP32_CHIP@.svd",
+            "toolchainPrefix": "@ESP32_TRIPLE@",
+            "type": "cortex-debug"
+        }
+    ],
+    "version": "0.2.0"
+}
