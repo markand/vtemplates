@@ -39,7 +39,7 @@ DISTDIR                 ::= $(TOP)/dist/zephyr/$(BOARD)
 all: zephyr-all
 	mkdir -p $(DISTDIR)/.vscode
 	mkdir -p $(DISTDIR)/svd
-	sed < $(COMMON_ESP32_DIR)/.vscode/tasks.json > $(DISTDIR)/.vscode/tasks.json
+	cp $(COMMON_ESP32_DIR)/.vscode/tasks.json $(DISTDIR)/.vscode/tasks.json
 	sed < $(COMMON_ESP32_DIR)/.vscode/launch.json > $(DISTDIR)/.vscode/launch.json \
 		-e "s,@ESP32_ADAPTER_SPEED@,$(ESP32_ADAPTER_SPEED),g" \
 		-e "s,@ESP32_APPIMAGE_OFFSET@,$(ESP32_APPIMAGE_OFFSET),g" \
