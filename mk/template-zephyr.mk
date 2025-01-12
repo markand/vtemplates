@@ -2,10 +2,6 @@
 # zephyr.mk -- common definitions and rules for Zephyr development
 #
 
-ZEPHYR_BASE ?= $${HOME}/zephyrproject/zephyr
-ZEPHYR_SDK_INSTALL_DIR ?= $${HOME}/zephyr-sdk
-ZEPHYR_VENV ?= $${HOME}/zephyrproject/.venv/bin
-
 #
 # Predefined targets
 #
@@ -47,7 +43,7 @@ zephyr-tasks-pre:
 	mkdir -p $(DISTDIR)/.vscode
 	sed < $(TOP)/zephyr/common/zephyr/.vscode/tasks.pre.json \
 		> $(DISTDIR)/.vscode/tasks.json \
-		-e 's,@PATH@,$(call build-path,$(call tasks-expand-env,$(ZEPHYR_VENV) $${env:PATH})),g'
+		-e 's,@PATH@,$(call build-path,$(call tasks-expand-env,$(ZEPHYR_VENV)) $${env:PATH}),g' \
 		-e 's,@ZEPHYR_BASE@,$(call tasks-expand-env,$(ZEPHYR_BASE)),g' \
 		-e 's,@ZEPHYR_SDK_INSTALL_DIR@,$(call tasks-expand-env,$(ZEPHYR_SDK_INSTALL_DIR)),g'
 
@@ -67,13 +63,16 @@ zephyr-cmake-presets:
 		-e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g' \
 		-e 's,@ZEPHYR_BASE@,$(call cmake-expand-env,$(ZEPHYR_BASE)),g' \
 		-e 's,@ZEPHYR_SDK_INSTALL_DIR@,$(call cmake-expand-env,$(ZEPHYR_SDK_INSTALL_DIR)),g' \
-		-e 's,@PATH@,$(call build-path,$(call cmake-expand-env,$(ZEPHYR_VENV) $$penv{PATH})),g'
+		-e 's,@PATH@,$(call build-path,$(call cmake-expand-env,$(ZEPHYR_VENV)) $$penv{PATH}),g'
 
 .PHONY: zephyr-boilerplate
 zephyr-boilerplate:
+	mkdir -p $(DISTDIR)
 	cp $(TOP)/zephyr/common/CMakeLists.txt $(DISTDIR)
 	cp $(TOP)/zephyr/common/main.c $(DISTDIR)
 	cp $(TOP)/zephyr/common/prj.conf $(DISTDIR)
+
+include $(TOP)/config.mk
 
 include $(TOP)/mk/utils.mk
 include $(TOP)/mk/cmake.mk

@@ -8,7 +8,7 @@
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "BOARD": "@BOARD@",
-                "NO_BUILD_TYPE_WARNINGS": "On"
+                "NO_BUILD_TYPE_WARNING": "On"
             },
             "environment": {
                 "PATH": "@PATH@",

@@ -1,5 +1,5 @@
-vtemplate README
-================
+vtemplates README
+=================
 
 This project consists of various templates for quicker development with Visual
 Studio Code.
@@ -38,3 +38,13 @@ To build templates, use GNU make (version >= 4) as following:
     $ make
 
 The result will be generated in `dist` directory.
+
+To build on Windows, uses either MSYS2, Git Bash, WSL or any compliant
+environment that includes basic shell with POSIX command line utilities (sed,
+echo and so on).
+
+Pass WIN32=1 as make macro to include various system tweaks.
+
+    $ make WIN32=1
+
+Note: GNU sed is required for now.

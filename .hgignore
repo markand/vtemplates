@@ -1,1 +1,5 @@
+# Build directory.
 ^dist
+
+# User configuration.
+^config\.local\.mk

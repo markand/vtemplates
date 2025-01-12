@@ -1,39 +1,40 @@
 #
 # esp32.mk -- common definitions and rules for Espressif devices
 #
-
+# Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
-# Global user configuration.
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
 #
-# ESP32_OPENOCD
-# -------------
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
-# Path to the custom espressif openocd fork, we will assume that it is build
-# with a prefix 'esp32-' to avoid conflict with upstream openocd.
-#
-
-ESP32_OPENOCD           ::= esp32-openocd
 
 #
 # Per board macros.
 #
-# ESP32_TRIPLE (required)
-# -----------------------
+# ### ESP32_TRIPLE (required)
 #
 # Toolchain triple to use (e.g. riscv64-zephyr-elf).
 #
-# ESP32_ADAPTER_SPEED
-# -------------------
+# ### ESP32_ADAPTER_SPEED
 #
 # Adapter speed in kHz as provided to OpenOCD.
 #
+
 ESP32_ADAPTER_SPEED      ?= 400
 
 #
 # Internal macros.
 #
-COMMON_ESP32_DIR        ::= $(TOP)/zephyr/common/esp32
-DISTDIR                 ::= $(TOP)/dist/zephyr/$(BOARD)
+COMMON_ESP32_DIR        = $(TOP)/zephyr/common/esp32
+DISTDIR                 = $(TOP)/dist/zephyr/$(BOARD)
 
 .PHONY: all
 all: zephyr-boilerplate zephyr-cmake-presets esp32-tasks
@@ -51,11 +52,14 @@ all: zephyr-boilerplate zephyr-cmake-presets esp32-tasks
 		-e "s,@ESP32_TRIPLE@,$(ESP32_TRIPLE),g"
 	cp svd/$(ESP32_CHIP).svd $(DISTDIR)/svd
 
+.PHONY: esp32-tasks-pre
 esp32-tasks-pre: zephyr-tasks-pre
 	cat $(COMMON_ESP32_DIR)/.vscode/tasks.extra.json >> $(DISTDIR)/.vscode/tasks.json
 
+.PHONY: esp32-tasks-post
 esp32-tasks-post: esp32-tasks-pre zephyr-tasks-post
 
+.PHONY: esp32-tasks
 esp32-tasks: esp32-tasks-post
 
-include $(TOP)/mk/zephyr.mk
+include $(TOP)/mk/template-zephyr.mk
