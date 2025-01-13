@@ -1,5 +1,5 @@
 #
-# GNUmakefile -- subdirectory for Zephyr templates
+# GNUmakefile -- Zephyr esp32c6_devkitc
 #
 # Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
@@ -16,11 +16,10 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-BOARDS = esp32c3_devkitc \
-         esp32c3_devkitm \
-         esp32c6_devkitc \
-         nucleo_g070rb
+TOP                     = ../..
+BOARD                   = nucleo_g070rb
 
-.PHONY: all
-all:
-	for b in $(BOARDS); do $(MAKE) -C $$b; done
+ST_CHIP                 = stm32g070
+ST_OPENOCD_CONFIG       = stm32g0x
+
+include $(TOP)/mk/template-st.mk

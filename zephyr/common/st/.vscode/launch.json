@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "cwd": "${workspaceFolder}",
+            "executable": "${command:cmake.buildDirectory}/zephyr/zephyr.elf",
+            "name": "Debug (zephyr/@ST_CHIP@)",
+            "request": "launch",
+            "rtos": "Zephyr",
+            "runToEntryPoint": "main",
+            "servertype": "openocd",
+            "serverpath": "@OPENOCD@",
+            "gdbPath": "@ZEPHYR_SDK_INSTALL_DIR@/@ST_TRIPLE@/bin/@ST_TRIPLE@-gdb",
+            "svdFile": "${workspaceFolder}/svd/@ST_CHIP@.svd",
+            "type": "cortex-debug",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/@ST_OPENOCD_CONFIG@.cfg"
+            ],
+        }
+    ],
+    "version": "0.2.0"
+}

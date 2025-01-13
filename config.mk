@@ -77,4 +77,6 @@ ZEPHYR_BASE ?= $${HOME}/zephyrproject/zephyr
 ZEPHYR_SDK_INSTALL_DIR ?= $${HOME}/zephyr-sdk
 ZEPHYR_VENV ?= $${HOME}/zephyrproject/.venv/bin
 
+OPENOCD ?= openocd
+
 -include $(TOP)/config.local.mk
