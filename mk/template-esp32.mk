@@ -1,5 +1,5 @@
 #
-# esp32.mk -- common definitions and rules for Espressif devices
+# template-esp32.mk -- common definitions and rules for Espressif devices
 #
 # Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
@@ -33,6 +33,7 @@ ESP32_ADAPTER_SPEED      ?= 400
 #
 # Internal macros.
 #
+
 COMMON_ESP32_DIR        = $(TOP)/zephyr/common/esp32
 DISTDIR                 = $(TOP)/dist/zephyr/$(BOARD)
 

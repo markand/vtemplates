@@ -16,10 +16,22 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-COMMON_ST_DIR           = $(TOP)/zephyr/common/st
-DISTDIR                 = $(TOP)/dist/zephyr/$(BOARD)
+#
+# Per board macros.
+#
+# ### ESP32_TRIPLE (required)
+#
+# Toolchain triple to use (e.g. riscv64-zephyr-elf).
+#
 
 ST_TRIPLE               ?= arm-zephyr-eabi
+
+#
+# Internal macros.
+#
+
+COMMON_ST_DIR           = $(TOP)/zephyr/common/st
+DISTDIR                 = $(TOP)/dist/zephyr/$(BOARD)
 
 .PHONY: all
 all: zephyr-boilerplate zephyr-cmake-presets zephyr-tasks

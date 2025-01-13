@@ -1,5 +1,5 @@
 #
-# GNUmakefile -- Zephyr esp32c6_devkitc
+# GNUmakefile -- Zephyr nucleo_g070rb
 #
 # Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
