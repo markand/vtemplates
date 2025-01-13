@@ -41,15 +41,16 @@ all: zephyr-boilerplate zephyr-cmake-presets esp32-tasks
 	mkdir -p $(DISTDIR)/.vscode
 	mkdir -p $(DISTDIR)/svd
 	sed < $(COMMON_ESP32_DIR)/.vscode/launch.json > $(DISTDIR)/.vscode/launch.json \
-		-e "s,@ESP32_ADAPTER_SPEED@,$(ESP32_ADAPTER_SPEED),g" \
-		-e "s,@ESP32_APPIMAGE_OFFSET@,$(ESP32_APPIMAGE_OFFSET),g" \
-		-e "s,@ESP32_CHIP@,$(ESP32_CHIP),g" \
-		-e "s,@ESP32_FLASH_END@,$(ESP32_FLASH_END),g" \
-		-e "s,@ESP32_FLASH_START@,$(ESP32_FLASH_START),g" \
-		-e "s,@ESP32_OPENOCD@,$(ESP32_OPENOCD),g" \
-		-e "s,@ESP32_SRAM_END@,$(ESP32_SRAM_END),g" \
-		-e "s,@ESP32_SRAM_START@,$(ESP32_SRAM_START),g" \
-		-e "s,@ESP32_TRIPLE@,$(ESP32_TRIPLE),g"
+		-e 's,@ESP32_ADAPTER_SPEED@,$(ESP32_ADAPTER_SPEED),g' \
+		-e 's,@ESP32_APPIMAGE_OFFSET@,$(ESP32_APPIMAGE_OFFSET),g' \
+		-e 's,@ESP32_CHIP@,$(ESP32_CHIP),g' \
+		-e 's,@ESP32_FLASH_END@,$(ESP32_FLASH_END),g' \
+		-e 's,@ESP32_FLASH_START@,$(ESP32_FLASH_START),g' \
+		-e 's,@ESP32_OPENOCD@,$(ESP32_OPENOCD),g' \
+		-e 's,@ESP32_SRAM_END@,$(ESP32_SRAM_END),g' \
+		-e 's,@ESP32_SRAM_START@,$(ESP32_SRAM_START),g' \
+		-e 's,@ESP32_TRIPLE@,$(ESP32_TRIPLE),g' \
+		-e 's,@ZEPHYR_SDK_INSTALL_DIR@,$(call tasks-expand-env,$(ZEPHYR_SDK_INSTALL_DIR)),g'
 	cp svd/$(ESP32_CHIP).svd $(DISTDIR)/svd
 
 .PHONY: esp32-tasks-pre

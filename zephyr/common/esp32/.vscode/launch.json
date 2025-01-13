@@ -8,8 +8,8 @@
             "debuggerArgs": [
                 "-q"
             ],
-            "executable": "./build/zephyr/zephyr.elf",
-            "gdbPath": "${env:HOME}/zephyr-sdk/@ESP32_TRIPLE@/bin/@ESP32_TRIPLE@-gdb",
+            "executable": "${command:cmake.buildDirectory}/zephyr/zephyr.elf",
+            "gdbPath": "@ZEPHYR_SDK_INSTALL_DIR@/@ESP32_TRIPLE@/bin/@ESP32_TRIPLE@-gdb",
             "name": "Debug (zephyr/@ESP32_CHIP@)",
             "openOCDLaunchCommands": [
                 "init",
@@ -22,7 +22,7 @@
                 "adapter speed @ESP32_ADAPTER_SPEED@"
             ],
             "overrideLaunchCommands": [
-                "monitor program_esp ./build/zephyr/zephyr.bin 0x00 compress"
+                "monitor program_esp ${command:cmake.buildDirectory}/zephyr/zephyr.bin 0x00 compress"
             ],
             "preLaunchCommands": [
                 "set arch riscv:rv32",
