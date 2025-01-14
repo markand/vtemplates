@@ -21,8 +21,8 @@ TOP                     = ../../..
 ZEPHYR_BOARD            = nucleo_g070rb
 ZEPHYR_VENDOR           = st
 
-ST_CHIP                 = stm32g0
-ST_OPENOCD_CONFIG       = stm32g0x
+ST_CHIP                 = stm32g070
+ST_OPENOCD_CONFIG       = stm32g0x.cfg
 ST_SVD                  = stm32g070.svd
 
 include $(TOP)/mk/zephyr-st.mk

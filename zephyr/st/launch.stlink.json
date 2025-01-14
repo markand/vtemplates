@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "cwd": "${workspaceFolder}",
+            "executable": "${command:cmake.buildDirectory}/zephyr/zephyr.elf",
+            "name": "Debug (zephyr/@ST_CHIP@)",
+            "request": "launch",
+            "runToEntryPoint": "main",
+            "servertype": "stlink",
+            "gdbPath": "@ZEPHYR_SDK_INSTALL_DIR@/@ST_TRIPLE@/bin/@ST_TRIPLE@-gdb",
+            "svdFile": "${workspaceFolder}/svd/@ST_SVD@",
+            "type": "cortex-debug"
+        }
+    ],
+    "version": "0.2.0"
+}
