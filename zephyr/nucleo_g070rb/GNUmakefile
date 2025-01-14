@@ -19,7 +19,7 @@
 TOP                     = ../..
 BOARD                   = nucleo_g070rb
 
-ST_CHIP                 = stm32g070
+ST_CHIP                 = stm32g0
 ST_OPENOCD_CONFIG       = stm32g0x
 
 include $(TOP)/mk/template-st.mk

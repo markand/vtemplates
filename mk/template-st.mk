@@ -19,9 +19,13 @@
 #
 # Per board macros.
 #
-# ### ESP32_TRIPLE (required)
+# ### ST_SVD (required)
 #
-# Toolchain triple to use (e.g. riscv64-zephyr-elf).
+# Path to SVD file.
+#
+# ### ST_TRIPLE
+#
+# Toolchain triple to use (e.g. arm-zephyr-eabi)
 #
 
 ST_TRIPLE               ?= arm-zephyr-eabi
@@ -36,7 +40,7 @@ DISTDIR                 = $(TOP)/dist/zephyr/$(BOARD)
 .PHONY: all
 all: zephyr-boilerplate zephyr-cmake-presets zephyr-tasks
 	mkdir -p $(DISTDIR)
-	cp svd/$(ST_CHIP).svd $(DISTDIR)/svd
+	cp svd/$(ST_SVD).svd $(DISTDIR)/svd
 	sed < $(COMMON_ST_DIR)/.vscode/launch.json > $(DISTDIR)/.vscode/launch.json \
 		-e 's,@OPENOCD@,$(call tasks-expand-env,$(OPENOCD)),g' \
 		-e 's,@ST_CHIP@,$(ST_CHIP),g' \
