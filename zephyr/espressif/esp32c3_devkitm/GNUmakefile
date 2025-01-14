@@ -1,5 +1,5 @@
 #
-# GNUmakefile -- Zephyr nucleo_g070rb
+# GNUmakefile -- Zephyr esp32c3_devkitm
 #
 # Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
@@ -16,10 +16,15 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-TOP                     = ../..
-BOARD                   = nucleo_g070rb
+TOP                     = ../../..
 
-ST_CHIP                 = stm32g0
-ST_OPENOCD_CONFIG       = stm32g0x
+ZEPHYR_BOARD            = esp32c3_devkitm
+ZEPHYR_VENDOR           = espressif
 
-include $(TOP)/mk/template-st.mk
+ESP32_CHIP              = esp32c3
+ESP32_APPIMAGE_OFFSET   = 0x42000000
+ESP32_FLASH_END         = 0x00400000
+ESP32_SRAM_START        = 0x3fc80000
+ESP32_SRAM_END          = 0x3fce0000
+
+include $(TOP)/mk/zephyr-esp32.mk

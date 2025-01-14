@@ -30,6 +30,13 @@
 #
 # Note: not all settings support environment variable so use them sparingly.
 #
+# General
+# -------
+#
+# ### WIN32
+#
+# Define this variable if building for Windows platform.
+#
 # CMake
 # -----
 #
@@ -66,7 +73,8 @@
 #
 # Path to Zephyr python virtual environment.
 #
-# Defaults: $${HOME}/zephyrproject/.venv/bin
+# Defaults: $${HOME}/zephyrproject/.venv/bin     (Others)
+# Defaults: $${HOME}/zephyrproject/.venv/Scripts (Windows)
 #
 
 CMAKE_GENERATOR ?= Ninja
@@ -75,7 +83,12 @@ ESP32_OPENOCD ?= esp32-openocd
 
 ZEPHYR_BASE ?= $${HOME}/zephyrproject/zephyr
 ZEPHYR_SDK_INSTALL_DIR ?= $${HOME}/zephyr-sdk
+
+ifeq ($(WIN32),1)
+ZEPHYR_VENV ?= $${HOME}/zephyrproject/.venv/Scripts
+else
 ZEPHYR_VENV ?= $${HOME}/zephyrproject/.venv/bin
+endif
 
 OPENOCD ?= openocd
 

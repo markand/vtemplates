@@ -17,15 +17,21 @@
 #
 
 #
+# CMake utilities
+# ===============
+#
 # Function-like macros
+# --------------------
 #
-# cmake-expand-env(variable)
-# --------------------------
+# ### cmake-expand-env(variable)
 #
-# Expand a shell like variable into the CMake syntax. Example: if variable
-# contains ${HOME}/foo/bar it is converted to $env{HOME}/foo/bar.
+# Expand a shell like variable into the CMake syntax suitable for CMake Presets
+# JSON schema.
+#
+# Example: if variable contains ${HOME}/foo/bar it is converted to
+# $env{HOME}/foo/bar.
 #
 
 define cmake-expand-env
-$(shell echo '$1' | sed -E -e 's,\$$\{([^}]+)\},$$env{\1},g')
+$(shell printf '$1' | sed -e 's,\$${,$$env{,g')
 endef

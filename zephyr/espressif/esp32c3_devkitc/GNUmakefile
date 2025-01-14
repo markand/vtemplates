@@ -1,5 +1,5 @@
 #
-# GNUmakefile -- Zephyr esp32c6_devkitc
+# GNUmakefile -- Zephyr esp32c3_devkitc
 #
 # Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
@@ -16,15 +16,15 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-TOP                     = ../..
-BOARD                   = esp32c6_devkitc
+TOP                     = ../../..
 
-ESP32_CHIP              = esp32c6
-ESP32_TRIPLE            = riscv64-zephyr-elf
+ZEPHYR_BOARD            = esp32c3_devkitc
+ZEPHYR_VENDOR           = espressif
+
+ESP32_CHIP              = esp32c3
 ESP32_APPIMAGE_OFFSET   = 0x42000000
-ESP32_FLASH_START       = 0x00000000
-ESP32_FLASH_END         = 0x00800000
-ESP32_SRAM_START        = 0x40800000
-ESP32_SRAM_END          = 0x40850000
+ESP32_FLASH_END         = 0x00400000
+ESP32_SRAM_START        = 0x3fc80000
+ESP32_SRAM_END          = 0x3fce0000
 
-include $(TOP)/mk/template-esp32.mk
+include $(TOP)/mk/zephyr-esp32.mk

@@ -16,7 +16,35 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-ifeq ($(WIN32),1)
+#
+# Utilities
+# =========
+#
+# Variables
+# ---------
+#
+# ### SEP
+#
+# Directory separator, set to ';' if WIN32 make variable is set, ':' otherwise.
+#
+# Callable variables
+# ------------------
+#
+# ### build-path(...)
+#
+# Create a colon/semi-colon separated string usable as a PATH environment
+# variable.
+#
+# ### vscode-expand-env(string)
+#
+# Transform `string` such as every occurence of ${FOO} is replaced with a VSCode
+# syntax ${env:FOO}. This only works if the variable is surrounded by {}.
+#
+# Note: because make also interpret ${} as variables, user must pass a double
+# dollar sign in order to set an environment variable.
+#
+
+ifdef WIN32
 SEP = ;
 else
 SEP = :
@@ -26,6 +54,6 @@ define build-path
 $(subst $(eval ) ,$(SEP),$1)
 endef
 
-define tasks-expand-env
-$(shell echo '$1' | sed -E -e 's,\$$\{([^}]+)\},$${env:\1},g')
+define vscode-expand-env
+$(shell printf '$1' | sed -e 's,\$${,$${env:,g')
 endef

@@ -1,5 +1,5 @@
 #
-# GNUmakefile -- subdirectory for Zephyr templates
+# GNUmakefile -- subdirectory for STM32 Zephyr templates
 #
 # Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
@@ -16,7 +16,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-SUBDIRS = espressif st
+SUBDIRS = nucleo_g070rb
 
 .PHONY: all
 all:

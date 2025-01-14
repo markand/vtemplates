@@ -10,7 +10,7 @@
             "servertype": "openocd",
             "serverpath": "@OPENOCD@",
             "gdbPath": "@ZEPHYR_SDK_INSTALL_DIR@/@ST_TRIPLE@/bin/@ST_TRIPLE@-gdb",
-            "svdFile": "${workspaceFolder}/svd/@ST_CHIP@.svd",
+            "svdFile": "${workspaceFolder}/svd/@ST_SVD@",
             "type": "cortex-debug",
             "configFiles": [
                 "interface/stlink.cfg",

@@ -23,29 +23,30 @@
 #
 # Path to SVD file.
 #
-# ### ST_TRIPLE
+# ### ST_TRIPLE (optional)
 #
-# Toolchain triple to use (e.g. arm-zephyr-eabi)
+# Toolchain triple to use.
 #
-
-ST_TRIPLE               ?= arm-zephyr-eabi
-
-#
-# Internal macros.
+# Defaults: arm-zephyr-eabi.
 #
 
-COMMON_ST_DIR           = $(TOP)/zephyr/common/st
-DISTDIR                 = $(TOP)/dist/zephyr/$(BOARD)
+ifndef ST_SVD
+$(error ST_SVD not set)
+endif
+
+ST_TRIPLE ?= arm-zephyr-eabi
+ST_DIR = $(TOP)/zephyr/st
 
 .PHONY: all
-all: zephyr-boilerplate zephyr-cmake-presets zephyr-tasks
-	mkdir -p $(DISTDIR)
-	cp svd/$(ST_SVD).svd $(DISTDIR)/svd
-	sed < $(COMMON_ST_DIR)/.vscode/launch.json > $(DISTDIR)/.vscode/launch.json \
-		-e 's,@OPENOCD@,$(call tasks-expand-env,$(OPENOCD)),g' \
+all: zephyr-all
+	sed < $(ST_DIR)/launch.json > $(DISTDIR)/.vscode/launch.json \
+		-e 's,@OPENOCD@,$(call vscode-expand-env,$(OPENOCD)),g' \
 		-e 's,@ST_CHIP@,$(ST_CHIP),g' \
 		-e 's,@ST_OPENOCD_CONFIG@,$(ST_OPENOCD_CONFIG),g' \
+		-e 's,@ST_SVD@,$(ST_SVD),g' \
 		-e 's,@ST_TRIPLE@,$(ST_TRIPLE),g' \
-		-e 's,@ZEPHYR_SDK_INSTALL_DIR@,$(call tasks-expand-env,$(ZEPHYR_SDK_INSTALL_DIR)),g'
+		-e 's,@ZEPHYR_SDK_INSTALL_DIR@,$(call vscode-expand-env,$(ZEPHYR_SDK_INSTALL_DIR)),g'
+	mkdir -p $(DISTDIR)/svd
+	cp $(ST_SVD) $(DISTDIR)/svd
 
-include $(TOP)/mk/template-zephyr.mk
+include $(TOP)/mk/zephyr.mk

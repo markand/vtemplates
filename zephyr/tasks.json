@@ -1,0 +1,107 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "env": {
+            "PATH": "@PATH@",
+            "ZEPHYR_BASE": "@ZEPHYR_BASE@",
+            "ZEPHYR_SDK_INSTALL_DIR": "@ZEPHYR_SDK_INSTALL_DIR@"
+        }
+    },
+    "tasks": [
+@TASKS_EXTRA@
+        {
+            "label": "zephyr: terminal",
+            "type": "shell",
+            "command": "${env:SHELL}",
+            "windows": {
+                "command": "${env:ComSpec}"
+            },
+            "isBackground": true,
+            "presentation": {
+                "echo": false,
+                "focus": true,
+                "panel": "dedicated",
+                "reveal": "always",
+                "showReuseMessage": false
+            },
+            "runOptions": {
+                "instanceLimit": 16
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "zephyr: build",
+            "type": "cmake",
+            "command": "build",
+            "group": {
+                "isDefault": true,
+                "kind": "build"
+            },
+            "problemMatcher": {
+                "fileLocation": [
+                    "absolute"
+                ],
+                "owner": "cpp",
+                "pattern": {
+                    "column": 3,
+                    "file": 1,
+                    "line": 2,
+                    "message": 5,
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "severity": 4
+                },
+                "source": "cmake"
+            }
+        },
+        {
+            "label": "zephyr: guiconfig",
+            "type": "cmake",
+            "command": "build",
+            "targets": [ "guiconfig" ],
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "showReuseMessage": false,
+                "clear": true,
+                "close": true
+            }
+        },
+        {
+            "label": "zephyr: flash",
+            "type": "cmake",
+            "command": "build",
+            "targets": [ "flash" ],
+            "problemMatcher": []
+        },
+        {
+            "label": "zephyr: RAM report",
+            "type": "cmake",
+            "command": "build",
+            "targets": [ "ram_report" ],
+            "presentation": {
+                "clear": false,
+                "echo": false,
+                "focus": false,
+                "panel": "dedicated",
+                "reveal": "always",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "zephyr: ROM report",
+            "type": "cmake",
+            "command": "build",
+            "targets": [ "rom_report" ],
+            "presentation": {
+                "clear": false,
+                "echo": false,
+                "focus": false,
+                "panel": "dedicated",
+                "reveal": "always",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        }
+    ]
+}

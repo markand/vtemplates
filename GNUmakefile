@@ -20,7 +20,7 @@ SUBDIRS = zephyr
 
 .PHONY: all
 all:
-	for s in $(SUBDIRS); do $(MAKE) -C $$s; done
+	for s in $(SUBDIRS); do $(MAKE) -C $$s || exit 1; done
 
 .PHONY: clean
 clean:

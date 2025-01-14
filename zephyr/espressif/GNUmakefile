@@ -1,5 +1,5 @@
 #
-# GNUmakefile -- subdirectory for Zephyr templates
+# GNUmakefile -- subdirectory for Espressif Zephyr templates
 #
 # Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
@@ -16,7 +16,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-SUBDIRS = espressif st
+SUBDIRS = esp32c3_devkitc esp32c3_devkitm esp32c6_devkitc
 
 .PHONY: all
 all:
