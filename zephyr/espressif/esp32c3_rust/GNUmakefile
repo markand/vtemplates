@@ -1,5 +1,5 @@
 #
-# GNUmakefile -- subdirectory for Espressif Zephyr templates
+# GNUmakefile -- Zephyr esp32c3_rust
 #
 # Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
@@ -16,11 +16,15 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-SUBDIRS = esp32c3_devkitc \
-          esp32c3_devkitm \
-          esp32c3_rust \
-          esp32c6_devkitc
+TOP                     = ../../..
 
-.PHONY: all
-all:
-	for s in $(SUBDIRS); do $(MAKE) -C $$s || exit 1; done
+ZEPHYR_BOARD            = esp32c3_rust
+ZEPHYR_VENDOR           = espressif
+
+ESP32_CHIP              = esp32c3
+ESP32_APPIMAGE_OFFSET   = 0x42000000
+ESP32_FLASH_END         = 0x00400000
+ESP32_SRAM_START        = 0x3fc70000
+ESP32_SRAM_END          = 0x3fcc0000
+
+include $(TOP)/mk/zephyr-esp32.mk
