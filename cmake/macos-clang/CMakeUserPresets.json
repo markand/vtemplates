@@ -1,0 +1,32 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "macos-clang-common",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build",
+            "generator": "@CMAKE_GENERATOR@",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "/usr/bin/clang++",
+                "CMAKE_C_COMPILER": "/usr/bin/clang",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "On"
+            }
+        },
+        {
+            "name": "Debug",
+            "displayName": "macOS clang (Debug/aarch64)",
+            "inherits": "macos-clang-common",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "Release",
+            "displayName": "macOS clang (Release/aarch64)",
+            "inherits": "macos-clang-common",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ]
+}

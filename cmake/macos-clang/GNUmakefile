@@ -1,5 +1,5 @@
 #
-# GNUmakefile -- main makefile for vtemplates
+# GNUmakefile -- subdirectory for CMake macOS clang+lldb
 #
 # Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
@@ -16,12 +16,18 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-SUBDIRS = cmake zephyr
+TOP             = ../..
+DISTDIR         = $(TOP)/dist/cmake/macos-clang
 
 .PHONY: all
 all:
-	for s in $(SUBDIRS); do $(MAKE) -C $$s || exit 1; done
+	mkdir -p $(DISTDIR)
+	cp CMakeLists.txt $(DISTDIR)
+	sed < CMakeUserPresets.json > $(DISTDIR)/CMakeUserPresets.json \
+		-e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g'
+	cp main.c $(DISTDIR)
+	mkdir -p $(DISTDIR)/.vscode
+	cp launch.json $(DISTDIR)/.vscode
+	cp tasks.json $(DISTDIR)/.vscode
 
-.PHONY: clean
-clean:
-	rm -rf dist
+include $(TOP)/config.mk
