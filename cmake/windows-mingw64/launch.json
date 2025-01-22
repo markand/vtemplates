@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "environment": {
+                "PATH": "@MINGW64_PATH@/bin;${env:PATH}"
+            },
+            "type": "gdb",
+            "program": "${command:cmake.launchTargetPath}",
+            "request": "launch",
+            "name": "GDB",
+            "gdb": "@MINGW64_GDB@",
+            "preLaunchTask": "cmake: build"
+        }
+    ]
+}

@@ -37,6 +37,38 @@
 #
 # Define this variable if building for Windows platform.
 #
+# MinGW
+# -----
+#
+# Options towards MinGW (MinGW-64).
+#
+# ### MINGW64_PATH
+#
+# Root directory where MinGW-64 toolchain lives (e.g. C:/mingw64)
+#
+# Defaults: C:/mingw64
+#
+# ### MINGW64_GCC
+#
+# Path to gcc.exe.
+#
+# If relative, it should be present in the PATH which is usually the case at
+# $(MINGW64_PATH)/bin will be prepended to all build systems.
+#
+# Defaults: gcc.exe
+#
+# ### MINGW64_GXX
+#
+# Similar to MINGW64_GCC but for g++.
+#
+# Defaults: g++.exe
+#
+# ### MINGW64_GDB
+#
+# Similar to MINGW64_GCC but for gdb.exe
+#
+# Defaults: gdb.exe
+#
 # CMake
 # -----
 #
@@ -81,6 +113,13 @@ CMAKE_GENERATOR ?= Ninja
 
 ESP32_OPENOCD ?= esp32-openocd
 
+OPENOCD ?= openocd
+
+MINGW64_GCC ?= gcc.exe
+MINGW64_GDB ?= gdb.exe
+MINGW64_GXX ?= g++.exe
+MINGW64_PATH ?= C:/mingw64
+
 ZEPHYR_BASE ?= $${HOME}/zephyrproject/zephyr
 ZEPHYR_SDK_INSTALL_DIR ?= $${HOME}/zephyr-sdk
 
@@ -89,7 +128,5 @@ ZEPHYR_VENV ?= $${HOME}/zephyrproject/.venv/Scripts
 else
 ZEPHYR_VENV ?= $${HOME}/zephyrproject/.venv/bin
 endif
-
-OPENOCD ?= openocd
 
 -include $(TOP)/config.local.mk

@@ -7,9 +7,13 @@
             "command": "build",
             "targets": [ "all" ],
             "preset": "${command:cmake.activeBuildPresetName}",
-            "group":{
+            "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
             },
             "problemMatcher": {
                 "fileLocation": [ "absolute" ],

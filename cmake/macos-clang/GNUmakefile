@@ -20,14 +20,10 @@ TOP             = ../..
 DISTDIR         = $(TOP)/dist/cmake/macos-clang
 
 .PHONY: all
-all:
-	mkdir -p $(DISTDIR)
-	cp CMakeLists.txt $(DISTDIR)
+all: cmake-boilerplate
 	sed < CMakeUserPresets.json > $(DISTDIR)/CMakeUserPresets.json \
 		-e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g'
-	cp main.c $(DISTDIR)
 	mkdir -p $(DISTDIR)/.vscode
 	cp launch.json $(DISTDIR)/.vscode
-	cp tasks.json $(DISTDIR)/.vscode
 
-include $(TOP)/config.mk
+include $(TOP)/mk/cmake.mk

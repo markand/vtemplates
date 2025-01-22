@@ -1,0 +1,39 @@
+{
+    "version": 10,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 28,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "environment": {
+                "PATH": "@MINGW64_PATH@/bin;$penv{PATH}"
+            },
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "@MINGW64_GCC@",
+                "CMAKE_CXX_COMPILER": "@MINGW64_GXX@"
+            },
+            "hidden": true,
+            "name": "mingw64-x86_64"
+        },
+        {
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "generator": "Ninja",
+            "inherits": "mingw64-x86_64",
+            "name": "Debug (x86-64)"
+        },
+        {
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            },
+            "generator": "Ninja",
+            "inherits": "mingw64-x86_64",
+            "name": "Release (x86-64)"
+        }
+    ]
+}

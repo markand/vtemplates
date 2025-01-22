@@ -1,5 +1,5 @@
 #
-# cmake.mk -- CMake utilities
+# GNUmakefile -- subdirectory for CMake Windows MinGW64+GDB
 #
 # Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
@@ -16,33 +16,19 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-#
-# CMake utilities
-# ===============
-#
-# Function-like macros
-# --------------------
-#
-# ### cmake-expand-env(variable)
-#
-# Expand a shell like variable into the CMake syntax suitable for CMake Presets
-# JSON schema.
-#
-# Example: if variable contains ${HOME}/foo/bar it is converted to
-# $env{HOME}/foo/bar.
-#
+TOP             = ../..
+DISTDIR         = $(TOP)/dist/cmake/windows-mingw64
 
-CMAKE_DIR = $(TOP)/cmake
-
-.PHONY: cmake-boilerplate
-cmake-boilerplate:
+.PHONY: all
+all: cmake-boilerplate
+	sed < CMakeUserPresets.json > $(DISTDIR)/CMakeUserPresets.json \
+		-e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g' \
+		-e 's,@MINGW64_GCC@,$(MINGW64_GCC),g' \
+		-e 's,@MINGW64_GXX@,$(MINGW64_GXX),g' \
+		-e 's,@MINGW64_PATH@,$(MINGW64_PATH),g'
 	mkdir -p $(DISTDIR)/.vscode
-	cp $(CMAKE_DIR)/CMakeLists.txt $(DISTDIR)
-	cp $(CMAKE_DIR)/main.c $(DISTDIR)
-	cp $(CMAKE_DIR)/tasks.json $(DISTDIR)/.vscode
+	sed < launch.json > $(DISTDIR)/.vscode/launch.json \
+		-e 's,@MINGW64_GDB@,$(MINGW64_GDB),g' \
+		-e 's,@MINGW64_PATH@,$(MINGW64_PATH),g'
 
-define cmake-expand-env
-$(shell printf '$1' | sed -e 's,\$${,$$env{,g')
-endef
-
-include $(TOP)/config.mk
+include $(TOP)/mk/cmake.mk

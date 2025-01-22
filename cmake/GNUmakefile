@@ -16,7 +16,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-SUBDIRS = macos-clang
+SUBDIRS = macos-clang windows-mingw64
 
 .PHONY: all
 all:
