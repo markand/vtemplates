@@ -1,5 +1,5 @@
 #
-# GNUmakefile -- subdirectory for CMake templates
+# GNUmakefile -- subdirectory for CMake Windows VS
 #
 # Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
@@ -16,8 +16,12 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-SUBDIRS = macos-clang windows-mingw64 windows-vs
+TOP             = ../..
+DISTDIR         = $(TOP)/dist/cmake/windows-vs
 
 .PHONY: all
-all:
-	for s in $(SUBDIRS); do $(MAKE) -C $$s || exit 1; done
+all: cmake-boilerplate
+	cp CMakeUserPresets.json $(DISTDIR)
+	cp launch.json $(DISTDIR)/.vscode
+
+include $(TOP)/mk/cmake.mk
