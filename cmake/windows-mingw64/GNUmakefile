@@ -23,6 +23,9 @@ DISTDIR         = $(TOP)/dist/cmake/windows-mingw64
 all: cmake-boilerplate
 	sed < CMakeUserPresets.json > $(DISTDIR)/CMakeUserPresets.json \
 		-e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g' \
+		-e 's,@CMAKE_MINIMUM_MAJOR@,$(CMAKE_MINIMUM_MAJOR),g' \
+		-e 's,@CMAKE_MINIMUM_MINOR@,$(CMAKE_MINIMUM_MINOR),g' \
+		-e 's,@CMAKE_MINIMUM_PATCH@,$(CMAKE_MINIMUM_PATCH),g' \
 		-e 's,@MINGW64_GCC@,$(MINGW64_GCC),g' \
 		-e 's,@MINGW64_GXX@,$(MINGW64_GXX),g' \
 		-e 's,@MINGW64_PATH@,$(MINGW64_PATH),g'

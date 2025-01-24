@@ -37,7 +37,10 @@ CMAKE_DIR = $(TOP)/cmake
 .PHONY: cmake-boilerplate
 cmake-boilerplate:
 	mkdir -p $(DISTDIR)/.vscode
-	cp $(CMAKE_DIR)/CMakeLists.txt $(DISTDIR)
+	sed < $(CMAKE_DIR)/CMakeLists.txt > $(DISTDIR)/CMakeLists.txt \
+		-e 's,@CMAKE_MINIMUM_MAJOR@,$(CMAKE_MINIMUM_MAJOR),g' \
+		-e 's,@CMAKE_MINIMUM_MINOR@,$(CMAKE_MINIMUM_MINOR),g' \
+		-e 's,@CMAKE_MINIMUM_PATCH@,$(CMAKE_MINIMUM_PATCH),g'
 	cp $(CMAKE_DIR)/main.c $(DISTDIR)
 	cp $(CMAKE_DIR)/tasks.json $(DISTDIR)/.vscode
 

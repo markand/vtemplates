@@ -1,5 +1,10 @@
 {
-    "version": 8,
+    "version": 10,
+    "cmakeMinimumRequired": {
+        "major": @CMAKE_MINIMUM_MAJOR@,
+        "minor": @CMAKE_MINIMUM_MINOR@,
+        "patch": @CMAKE_MINIMUM_PATCH@
+    },
     "configurePresets": [
         {
             "name": "macos-clang-common",
@@ -13,7 +18,7 @@
             }
         },
         {
-            "name": "Debug",
+            "name": "macos-clang-debug-aarch64",
             "displayName": "macOS clang (Debug/aarch64)",
             "inherits": "macos-clang-common",
             "cacheVariables": {
@@ -21,7 +26,7 @@
             }
         },
         {
-            "name": "Release",
+            "name": "macos-clang-release-aarch64",
             "displayName": "macOS clang (Release/aarch64)",
             "inherits": "macos-clang-common",
             "cacheVariables": {

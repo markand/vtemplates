@@ -17,11 +17,15 @@
 #
 
 TOP             = ../..
-DISTDIR         = $(TOP)/dist/cmake/windows-vs
+DISTDIR         = $(TOP)/dist/cmake/windows-msvs
 
 .PHONY: all
 all: cmake-boilerplate
-	cp CMakeUserPresets.json $(DISTDIR)
+	sed < CMakeUserPresets.json > $(DISTDIR)/CMakeUserPresets.json \
+		-e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g' \
+		-e 's,@CMAKE_MINIMUM_MAJOR@,$(CMAKE_MINIMUM_MAJOR),g' \
+		-e 's,@CMAKE_MINIMUM_MINOR@,$(CMAKE_MINIMUM_MINOR),g' \
+		-e 's,@CMAKE_MINIMUM_PATCH@,$(CMAKE_MINIMUM_PATCH),g'
 	cp launch.json $(DISTDIR)/.vscode
 
 include $(TOP)/mk/cmake.mk

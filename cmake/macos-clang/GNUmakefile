@@ -22,7 +22,10 @@ DISTDIR         = $(TOP)/dist/cmake/macos-clang
 .PHONY: all
 all: cmake-boilerplate
 	sed < CMakeUserPresets.json > $(DISTDIR)/CMakeUserPresets.json \
-		-e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g'
+		-e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g' \
+		-e 's,@CMAKE_MINIMUM_MAJOR@,$(CMAKE_MINIMUM_MAJOR),g' \
+		-e 's,@CMAKE_MINIMUM_MINOR@,$(CMAKE_MINIMUM_MINOR),g' \
+		-e 's,@CMAKE_MINIMUM_PATCH@,$(CMAKE_MINIMUM_PATCH),g'
 	mkdir -p $(DISTDIR)/.vscode
 	cp launch.json $(DISTDIR)/.vscode
 

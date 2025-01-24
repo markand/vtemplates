@@ -117,8 +117,6 @@ endif
 #
 # Sed arguments for CMakeUserPresets.json
 #
-SED_PRESETS_CMAKE_GENERATOR = -e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g'
-SED_PRESETS_BOARD = -e 's,@BOARD@,$(ZEPHYR_BOARD),g'
 SED_PRESETS_ZEPHYR_BASE = -e 's,@ZEPHYR_BASE@,$(call cmake-expand-env,$(ZEPHYR_BASE)),g'
 SED_PRESETS_ZEPHYR_SDK_INSTALL_DIR = -e 's,@ZEPHYR_SDK_INSTALL_DIR@,$(call cmake-expand-env,$(ZEPHYR_SDK_INSTALL_DIR)),g'
 SED_PRESETS_PATH = -e 's,@PATH@,$(call build-path,$(call cmake-expand-env,$(ZEPHYR_VENV)) $$penv{PATH}),g'
@@ -129,18 +127,24 @@ zephyr-all: zephyr-boilerplate zephyr-cmake-presets zephyr-tasks
 .PHONY: zephyr-boilerplate
 zephyr-boilerplate:
 	mkdir -p $(DISTDIR)
-	cp $(ZEPHYR_DIR)/CMakeLists.txt $(DISTDIR)
+	sed < $(ZEPHYR_DIR)/CMakeLists.txt > $(DISTDIR)/CMakeLists.txt \
+		-e 's,@CMAKE_MINIMUM_MAJOR@,$(CMAKE_MINIMUM_MAJOR),g' \
+		-e 's,@CMAKE_MINIMUM_MINOR@,$(CMAKE_MINIMUM_MINOR),g' \
+		-e 's,@CMAKE_MINIMUM_PATCH@,$(CMAKE_MINIMUM_PATCH),g'
 	cp $(ZEPHYR_DIR)/main.c $(DISTDIR)
 	cp $(ZEPHYR_DIR)/prj.conf $(DISTDIR)
 
 .PHONY: zephyr-cmake-presets
 zephyr-cmake-presets:
 	sed < $(ZEPHYR_DIR)/CMakeUserPresets.json > $(DISTDIR)/CMakeUserPresets.json \
-		$(SED_PRESETS_BOARD) \
-		$(SED_PRESETS_CMAKE_GENERATOR) \
 		$(SED_PRESETS_PATH) \
 		$(SED_PRESETS_ZEPHYR_BASE) \
-		$(SED_PRESETS_ZEPHYR_SDK_INSTALL_DIR)
+		$(SED_PRESETS_ZEPHYR_SDK_INSTALL_DIR) \
+		-e 's,@BOARD@,$(ZEPHYR_BOARD),g' \
+		-e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g' \
+		-e 's,@CMAKE_MINIMUM_MAJOR@,$(CMAKE_MINIMUM_MAJOR),g' \
+		-e 's,@CMAKE_MINIMUM_MINOR@,$(CMAKE_MINIMUM_MINOR),g' \
+		-e 's,@CMAKE_MINIMUM_PATCH@,$(CMAKE_MINIMUM_PATCH),g'
 
 .ONESHELL:
 .PHONY: zephyr-tasks

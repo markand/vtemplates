@@ -1,39 +1,40 @@
 {
     "version": 10,
     "cmakeMinimumRequired": {
-        "major": 3,
-        "minor": 28,
-        "patch": 0
+        "major": @CMAKE_MINIMUM_MAJOR@,
+        "minor": @CMAKE_MINIMUM_MINOR@,
+        "patch": @CMAKE_MINIMUM_PATCH@
     },
     "configurePresets": [
         {
+            "name": "mingw64-x86_64-common",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build",
+            "generator": "@CMAKE_GENERATOR@",
             "environment": {
                 "PATH": "@MINGW64_PATH@/bin;$penv{PATH}"
             },
             "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "@MINGW64_GXX@",
                 "CMAKE_C_COMPILER": "@MINGW64_GCC@",
-                "CMAKE_CXX_COMPILER": "@MINGW64_GXX@"
-            },
-            "hidden": true,
-            "name": "mingw64-x86_64"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "On"
+            }
         },
         {
-            "binaryDir": "${sourceDir}/build",
+            "name": "windows-mingw64-debug",
+            "displayName": "Windows MinGW64 (Debug)",
+            "inherits": "mingw64-x86_64-common",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
-            },
-            "generator": "Ninja",
-            "inherits": "mingw64-x86_64",
-            "name": "Debug (x86-64)"
+            }
         },
         {
-            "binaryDir": "${sourceDir}/build",
+            "name": "windows-mingw64-release",
+            "displayName": "Windows MinGW64 (Release)",
+            "inherits": "mingw64-x86_64-common",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
-            },
-            "generator": "Ninja",
-            "inherits": "mingw64-x86_64",
-            "name": "Release (x86-64)"
+            }
         }
     ]
 }

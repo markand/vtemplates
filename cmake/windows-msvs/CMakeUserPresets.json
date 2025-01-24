@@ -1,0 +1,78 @@
+{
+    "version": 10,
+    "cmakeMinimumRequired": {
+        "major": @CMAKE_MINIMUM_MAJOR@,
+        "minor": @CMAKE_MINIMUM_MINOR@,
+        "patch": @CMAKE_MINIMUM_PATCH@
+    },
+    "configurePresets": [
+        {
+            "name": "msvc-common",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build",
+            "generator": "@CMAKE_GENERATOR@",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "cl.exe",
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "On"
+            }
+        },
+        {
+            "name": "msvc-x86_64-common",
+            "hidden": true,
+            "inherits": "msvc-common",
+            "architecture": {
+                "strategy": "external",
+                "value": "x64"
+            },
+            "toolset": {
+                "strategy": "external",
+                "value": "host=x64"
+            }
+        },
+        {
+            "name": "msvc-x86-common",
+            "hidden": true,
+            "architecture": {
+                "strategy": "external",
+                "value": "x86"
+            },
+            "toolset": {
+                "strategy": "external",
+                "value": "host=x86"
+            }
+        },
+        {
+            "name": "windows-msvc-debug-x86_64",
+            "displayName": "Windows MSVC (Debug/x86_64)",
+            "inherits": "msvc-x86_64-common",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "windows-msvc-release-x86_64",
+            "displayName": "Windows MSVC (Release/x86_64)",
+            "inherits": "msvc-x86_64-common",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "windows-msvc-debug-x86",
+            "displayName": "Windows MSVC (Debug/x86)",
+            "inherits": "msvc-x86-common",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "windows-msvc-release-x86",
+            "displayName": "Windows MSVC (Release/x86)",
+            "inherits": "msvc-x86-common",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ]
+}

@@ -1,11 +1,16 @@
 {
+    "version": 10,
     "cmakeMinimumRequired": {
-        "major": 3,
-        "minor": 28
+        "major": @CMAKE_MINIMUM_MAJOR@,
+        "minor": @CMAKE_MINIMUM_MINOR@,
+        "patch": @CMAKE_MINIMUM_PATCH@
     },
     "configurePresets": [
         {
+            "name": "zephyr",
+            "displayName": "Zephyr",
             "binaryDir": "${sourceDir}/build",
+            "generator": "@CMAKE_GENERATOR@",
             "cacheVariables": {
                 "BOARD": "@BOARD@",
                 "NO_BUILD_TYPE_WARNING": "On"
@@ -14,10 +19,7 @@
                 "PATH": "@PATH@",
                 "ZEPHYR_BASE": "@ZEPHYR_BASE@",
                 "ZEPHYR_SDK_INSTALL_DIR": "@ZEPHYR_SDK_INSTALL_DIR@"
-            },
-            "generator": "@CMAKE_GENERATOR@",
-            "name": "Zephyr"
+            }
         }
-    ],
-    "version": 10
+    ]
 }

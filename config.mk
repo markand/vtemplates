@@ -78,6 +78,25 @@
 #
 # Defaults: Ninja.
 #
+# ### CMAKE_MINIMUM_MAJOR
+#
+# Minimum major version required for CMake as used in cmake_minimum_required and
+# CMakeUserPresets.json
+#
+# Defaults: 3
+#
+# ### CMAKE_MINIMUM_MINOR
+#
+# Similar to CMAKE_MINIMUM_MAJOR for minor version.
+#
+# Defaults: 30
+#
+# ### CMAKE_MINIMUM_PATCH
+#
+# Similar to CMAKE_MINIMUM_PATCH for patch version.
+#
+# Defaults: 0
+#
 # ESP32
 # -----
 #
@@ -110,6 +129,9 @@
 #
 
 CMAKE_GENERATOR ?= Ninja
+CMAKE_MINIMUM_MAJOR ?= 3
+CMAKE_MINIMUM_MINOR ?= 30
+CMAKE_MINIMUM_PATCH ?= 0
 
 ESP32_OPENOCD ?= esp32-openocd
 
