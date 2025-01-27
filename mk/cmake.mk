@@ -44,8 +44,8 @@ cmake-boilerplate:
 	cp $(CMAKE_DIR)/main.c $(DISTDIR)
 	cp $(CMAKE_DIR)/tasks.json $(DISTDIR)/.vscode
 
-define cmake-expand-env
-$(shell printf '$1' | sed -e 's,\$${,$$env{,g')
-endef
+cmake-expand-env = $(shell printf '$1' | sed 's,\$${,$$env{,g')
+cmake-concat-path = $(call cmake-expand-env,$(call concat-path,$1))
 
 include $(TOP)/config.mk
+include $(TOP)/mk/utils.mk

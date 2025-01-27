@@ -3,7 +3,7 @@
     "configurations": [
         {
             "environment": {
-                "PATH": "@MINGW64_PATH@/bin;${env:PATH}"
+                "PATH": "@MINGW64_PATH@;${env:PATH}"
             },
             "type": "gdb",
             "program": "${command:cmake.launchTargetPath}",

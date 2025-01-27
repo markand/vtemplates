@@ -17,7 +17,7 @@
 #
 
 TOP             = ../..
-DISTDIR         = $(TOP)/dist/cmake/windows-msvs
+DISTDIR         = $(TOP)/dist/cmake/windows-msvc
 
 .PHONY: all
 all: cmake-boilerplate
@@ -25,7 +25,9 @@ all: cmake-boilerplate
 		-e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g' \
 		-e 's,@CMAKE_MINIMUM_MAJOR@,$(CMAKE_MINIMUM_MAJOR),g' \
 		-e 's,@CMAKE_MINIMUM_MINOR@,$(CMAKE_MINIMUM_MINOR),g' \
-		-e 's,@CMAKE_MINIMUM_PATCH@,$(CMAKE_MINIMUM_PATCH),g'
-	cp launch.json $(DISTDIR)/.vscode
+		-e 's,@CMAKE_MINIMUM_PATCH@,$(CMAKE_MINIMUM_PATCH),g' \
+		-e 's,@MSVC_PATH@,$(call cmake-concat-path,$(MSVC_PATH)),g'
+	sed < launch.json > $(DISTDIR)/.vscode/launch.json \
+		-e 's,@MSVC_PATH@,$(call vscode-concat-path,$(MSVC_PATH)),g'
 
 include $(TOP)/mk/cmake.mk

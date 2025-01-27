@@ -1,6 +1,9 @@
 {
     "configurations": [
         {
+            "environment": {
+                "PATH": "@MSVC_PATH@;${env:PATH}"
+            },
             "cwd": "${workspaceFolder}",
             "name": "Debug (lldb)",
             "program": "${command:cmake.launchTargetPath}",

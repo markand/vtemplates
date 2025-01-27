@@ -44,16 +44,16 @@
 #
 # ### MINGW64_PATH
 #
-# Root directory where MinGW-64 toolchain lives (e.g. C:/mingw64)
+# Directories to MinGW64 executables as a newline list.
 #
-# Defaults: C:/mingw64
+# Defaults: C:/mingw64/bin
 #
 # ### MINGW64_GCC
 #
 # Path to gcc.exe.
 #
 # If relative, it should be present in the PATH which is usually the case at
-# $(MINGW64_PATH)/bin will be prepended to all build systems.
+# $(MINGW64_PATH) will be prepended to all build systems.
 #
 # Defaults: gcc.exe
 #
@@ -68,6 +68,18 @@
 # Similar to MINGW64_GCC but for gdb.exe
 #
 # Defaults: gdb.exe
+#
+# MSVC
+# ----
+#
+# Options specific to Visual Studio with CMake.
+#
+# ### MSVC_PATH
+#
+# Extra directories to be appended to PATH variable for tasks and launch
+# configurations.
+#
+# Defaults: C:/msvc/bin
 #
 # CMake
 # -----
@@ -140,7 +152,9 @@ OPENOCD ?= openocd
 MINGW64_GCC ?= gcc.exe
 MINGW64_GDB ?= gdb.exe
 MINGW64_GXX ?= g++.exe
-MINGW64_PATH ?= C:/mingw64
+MINGW64_PATH ?= C:/mingw64/bin
+
+MSVC ?= C:/msvc/bin
 
 ZEPHYR_BASE ?= $${HOME}/zephyrproject/zephyr
 ZEPHYR_SDK_INSTALL_DIR ?= $${HOME}/zephyr-sdk

@@ -11,6 +11,9 @@
             "hidden": true,
             "binaryDir": "${sourceDir}/build",
             "generator": "@CMAKE_GENERATOR@",
+            "environment": {
+                "PATH": "@MSVC_PATH@/bin;$penv{PATH}"
+            },
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "cl.exe",
                 "CMAKE_C_COMPILER": "cl.exe",

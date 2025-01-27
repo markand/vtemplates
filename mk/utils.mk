@@ -30,10 +30,10 @@
 # Callable variables
 # ------------------
 #
-# ### build-path(...)
+# ### concat-path(...)
 #
-# Create a colon/semi-colon separated string usable as a PATH environment
-# variable.
+# Create a colon/semi-colon variable with all entries specified as argument
+# separated by newlines.
 #
 # ### vscode-expand-env(string)
 #
@@ -50,10 +50,11 @@ else
 SEP = :
 endif
 
-define build-path
-$(subst $(eval ) ,$(SEP),$1)
-endef
+.ONESHELL:
+concat-path = $(shell printf '$1' | sed '/^$$/d' | tr '\n' '$(SEP)' | sed 's,$(SEP)$$,,')
 
-define vscode-expand-env
-$(shell printf '$1' | sed -e 's,\$${,$${env:,g')
-endef
+.ONESHELL:
+vscode-expand-env = $(shell printf '$1' | sed -e 's,\$${,$${env:,g')
+
+.ONESHELL:
+vscode-concat-path = $(call vscode-expand-env,$(call concat-path,$1))

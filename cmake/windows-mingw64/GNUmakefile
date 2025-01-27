@@ -28,10 +28,10 @@ all: cmake-boilerplate
 		-e 's,@CMAKE_MINIMUM_PATCH@,$(CMAKE_MINIMUM_PATCH),g' \
 		-e 's,@MINGW64_GCC@,$(MINGW64_GCC),g' \
 		-e 's,@MINGW64_GXX@,$(MINGW64_GXX),g' \
-		-e 's,@MINGW64_PATH@,$(MINGW64_PATH),g'
+		-e 's,@MINGW64_PATH@,$(call cmake-concat-path,$(MINGW64_PATH)),g'
 	mkdir -p $(DISTDIR)/.vscode
 	sed < launch.json > $(DISTDIR)/.vscode/launch.json \
 		-e 's,@MINGW64_GDB@,$(MINGW64_GDB),g' \
-		-e 's,@MINGW64_PATH@,$(MINGW64_PATH),g'
+		-e 's,@MINGW64_PATH@,$(call vscode-concat-path,$(MINGW64_PATH)),g'
 
 include $(TOP)/mk/cmake.mk
