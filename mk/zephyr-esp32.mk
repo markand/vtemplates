@@ -83,6 +83,8 @@
 # Set to the location of ESP32 specific template files.
 #
 
+.ONESHELL:
+
 ifndef ESP32_APPIMAGE_OFFSET
 $(error ESP32_APPIMAGE_OFFSET not set)
 endif
@@ -107,12 +109,13 @@ ifndef ESP32_SRAM_START
 $(error ESP32_SRAM_START not set)
 endif
 
-ESP32_TRIPLE ?= riscv64-zephyr-elf
-ESP32_ADAPTER_SPEED ?= 400
-ESP32_FLASH_START ?= 0x00000000
-ESP32_DIR = $(TOP)/zephyr/espressif
+ESP32_DIR            = $(TOP)/zephyr/espressif
 
-ZEPHYR_TASKS_EXTRA = $(TOP)/zephyr/espressif/tasks.extra.json
+ESP32_TRIPLE        ?= riscv64-zephyr-elf
+ESP32_ADAPTER_SPEED ?= 400
+ESP32_FLASH_START   ?= 0x00000000
+
+ZEPHYR_TASKS_EXTRA  = $(TOP)/zephyr/espressif/tasks.extra.json
 
 .PHONY: all
 all: zephyr-all
@@ -126,7 +129,7 @@ all: zephyr-all
 		-e 's,@ESP32_SRAM_END@,$(ESP32_SRAM_END),g' \
 		-e 's,@ESP32_SRAM_START@,$(ESP32_SRAM_START),g' \
 		-e 's,@ESP32_TRIPLE@,$(ESP32_TRIPLE),g' \
-		-e 's,@ZEPHYR_SDK_INSTALL_DIR@,$(call vscode-expand-env,$(ZEPHYR_SDK_INSTALL_DIR)),g'
+		-e 's,@ZEPHYR_SDK_INSTALL_DIR@,$(call vt-vscode-expand-env,$(ZEPHYR_SDK_INSTALL_DIR)),g'
 	if [ -f $(ESP32_CHIP).svd ]; then \
 		mkdir -p $(DISTDIR)/svd; \
 		cp $(ESP32_CHIP).svd $(DISTDIR)/svd; \

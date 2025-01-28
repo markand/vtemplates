@@ -20,6 +20,8 @@
 # CMake utilities
 # ===============
 #
+# This file contains CMake utilities.
+#
 # Function-like macros
 # --------------------
 #
@@ -31,8 +33,36 @@
 # Example: if variable contains ${HOME}/foo/bar it is converted to
 # $env{HOME}/foo/bar.
 #
+# ### cmake-concat-path(nl-list)
+#
+# Concatenate the NL separated list of directories and expand their environment
+# variables. Also append PATH to the end.
+#
+# Example:
+#
+# $${HOME}/bin becomes $env{HOME}/bin;$penv{PATH} (or : on Unix)
+#
+# Predefined targets
+# ------------------
+#
+# ### cmake-boilerplate
+#
+# Create a CMakeLists.txt, main.c and a tasks.json file suitable for most use
+# with toplevel macros defined.
+#
+# Predefined variables
+# --------------------
+#
+# ### CMAKE_DIR
+#
+# Set to the location of CMake template files.
+#
 
-CMAKE_DIR = $(TOP)/cmake
+.ONESHELL:
+
+include $(TOP)/config.mk
+
+CMAKE_DIR := $(TOP)/cmake
 
 .PHONY: cmake-boilerplate
 cmake-boilerplate:
@@ -44,8 +74,12 @@ cmake-boilerplate:
 	cp $(CMAKE_DIR)/main.c $(DISTDIR)
 	cp $(CMAKE_DIR)/tasks.json $(DISTDIR)/.vscode
 
-cmake-expand-env = $(shell printf '$1' | sed 's,\$${,$$env{,g')
-cmake-concat-path = $(call cmake-expand-env,$(call concat-path,$1))
+define cmake-expand-env =
+$(shell printf '$1' | sed 's,\$${,$$env{,g')
+endef
 
-include $(TOP)/config.mk
+define cmake-concat-path =
+$(call cmake-expand-env,$(call vt-concat-path,$1))$(VT_SEP)$$penv{PATH}
+endef
+
 include $(TOP)/mk/utils.mk

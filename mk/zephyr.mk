@@ -79,6 +79,8 @@
 # Generate a .vscode/tasks.json suitable for most Zephyr targets.
 #
 
+.ONESHELL:
+
 ifndef TOP
 $(error TOP not set)
 endif
@@ -91,16 +93,15 @@ ifndef ZEPHYR_VENDOR
 $(error ZEPHYR_VENDOR not set)
 endif
 
-DISTDIR = $(TOP)/dist/zephyr/$(ZEPHYR_VENDOR)/$(ZEPHYR_BOARD)
+include $(TOP)/config.mk
+
+DISTDIR    = $(TOP)/dist/zephyr/$(ZEPHYR_VENDOR)/$(ZEPHYR_BOARD)
 ZEPHYR_DIR = $(TOP)/zephyr
 
 #
-# Sed arguments for tasks.json
+# Substitute TASKS_EXTRA from a file if ZEPHYR_TASKS_EXTRA is defined, otherwise
+# delete the line.
 #
-SED_TASKS_PATH = -e 's,@PATH@,$(call build-path,$(call vscode-expand-env,$(ZEPHYR_VENV)) $${env:PATH}),g'
-SED_TASKS_ZEPHYR_BASE = -e 's,@ZEPHYR_BASE@,$(call vscode-expand-env,$(ZEPHYR_BASE)),g'
-SED_TASKS_ZEPHYR_SDK_INSTALL_DIR = -e 's,@ZEPHYR_SDK_INSTALL_DIR@,$(call vscode-expand-env,$(ZEPHYR_SDK_INSTALL_DIR)),g'
-
 ifneq ($(ZEPHYR_TASKS_EXTRA),)
 define SED_TASKS_EXTRA
 -e '/^@TASKS_EXTRA@/ {
@@ -113,13 +114,6 @@ define SED_TASKS_EXTRA
 -e '/^@TASKS_EXTRA@/d'
 endef
 endif
-
-#
-# Sed arguments for CMakeUserPresets.json
-#
-SED_PRESETS_ZEPHYR_BASE = -e 's,@ZEPHYR_BASE@,$(call cmake-expand-env,$(ZEPHYR_BASE)),g'
-SED_PRESETS_ZEPHYR_SDK_INSTALL_DIR = -e 's,@ZEPHYR_SDK_INSTALL_DIR@,$(call cmake-expand-env,$(ZEPHYR_SDK_INSTALL_DIR)),g'
-SED_PRESETS_PATH = -e 's,@PATH@,$(call build-path,$(call cmake-expand-env,$(ZEPHYR_VENV)) $$penv{PATH}),g'
 
 .PHONY: zephyr-all
 zephyr-all: zephyr-boilerplate zephyr-cmake-presets zephyr-tasks
@@ -136,27 +130,24 @@ zephyr-boilerplate:
 
 .PHONY: zephyr-cmake-presets
 zephyr-cmake-presets:
+	mkdir -p $(DISTDIR)
 	sed < $(ZEPHYR_DIR)/CMakeUserPresets.json > $(DISTDIR)/CMakeUserPresets.json \
-		$(SED_PRESETS_PATH) \
-		$(SED_PRESETS_ZEPHYR_BASE) \
-		$(SED_PRESETS_ZEPHYR_SDK_INSTALL_DIR) \
 		-e 's,@BOARD@,$(ZEPHYR_BOARD),g' \
 		-e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g' \
 		-e 's,@CMAKE_MINIMUM_MAJOR@,$(CMAKE_MINIMUM_MAJOR),g' \
 		-e 's,@CMAKE_MINIMUM_MINOR@,$(CMAKE_MINIMUM_MINOR),g' \
-		-e 's,@CMAKE_MINIMUM_PATCH@,$(CMAKE_MINIMUM_PATCH),g'
+		-e 's,@CMAKE_MINIMUM_PATCH@,$(CMAKE_MINIMUM_PATCH),g' \
+		-e 's,@ZEPHYR_BASE@,$(call cmake-expand-env,$(ZEPHYR_BASE)),g' \
+		-e 's,@ZEPHYR_PATH@,$(call cmake-concat-path,$(ZEPHYR_PATH)),g' \
+		-e 's,@ZEPHYR_SDK_INSTALL_DIR@,$(call cmake-expand-env,$(ZEPHYR_SDK_INSTALL_DIR)),g'
 
-.ONESHELL:
 .PHONY: zephyr-tasks
 zephyr-tasks:
 	mkdir -p $(DISTDIR)/.vscode
 	sed < $(ZEPHYR_DIR)/tasks.json > $(DISTDIR)/.vscode/tasks.json \
-		$(SED_TASKS_EXTRA) \
-		$(SED_TASKS_PATH) \
-		$(SED_TASKS_ZEPHYR_BASE) \
-		$(SED_TASKS_ZEPHYR_SDK_INSTALL_DIR)
+		-e 's,@ZEPHYR_PATH@,$(call vt-vscode-concat-path,$(ZEPHYR_PATH)),g' \
+		-e 's,@ZEPHYR_BASE@,$(call vt-vscode-expand-env,$(ZEPHYR_BASE)),g' \
+		-e 's,@ZEPHYR_SDK_INSTALL_DIR@,$(call vt-vscode-expand-env,$(ZEPHYR_SDK_INSTALL_DIR)),g' \
+		$(SED_TASKS_EXTRA)
 
-include $(TOP)/config.mk
-
-include $(TOP)/mk/utils.mk
 include $(TOP)/mk/cmake.mk

@@ -3,12 +3,12 @@
     "configurations": [
         {
             "environment": {
-                "PATH": "@MINGW64_PATH@;${env:PATH}"
+                "PATH": "@MINGW64_PATH@"
             },
             "type": "gdb",
             "program": "${command:cmake.launchTargetPath}",
             "request": "launch",
-            "name": "GDB",
+            "name": "Debug (GDB)",
             "gdb": "@MINGW64_GDB@",
             "preLaunchTask": "cmake: build"
         }

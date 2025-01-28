@@ -28,6 +28,7 @@ all: cmake-boilerplate
 		-e 's,@CMAKE_MINIMUM_PATCH@,$(CMAKE_MINIMUM_PATCH),g' \
 		-e 's,@MSVC_PATH@,$(call cmake-concat-path,$(MSVC_PATH)),g'
 	sed < launch.json > $(DISTDIR)/.vscode/launch.json \
-		-e 's,@MSVC_PATH@,$(call vscode-concat-path,$(MSVC_PATH)),g'
+		-e 's,@MSVC_PATH@,$(call vt-vscode-concat-path,$(MSVC_PATH)),g'
+	cp tasks.json $(DISTDIR)/.vscode/tasks.json
 
 include $(TOP)/mk/cmake.mk

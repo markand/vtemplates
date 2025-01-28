@@ -23,19 +23,19 @@
 # Variables
 # ---------
 #
-# ### SEP
+# ### VT_SEP
 #
 # Directory separator, set to ';' if WIN32 make variable is set, ':' otherwise.
 #
 # Callable variables
 # ------------------
 #
-# ### concat-path(...)
+# ### vt-concat-path(nl-list)
 #
 # Create a colon/semi-colon variable with all entries specified as argument
 # separated by newlines.
 #
-# ### vscode-expand-env(string)
+# ### vt-vscode-expand-env(string)
 #
 # Transform `string` such as every occurence of ${FOO} is replaced with a VSCode
 # syntax ${env:FOO}. This only works if the variable is surrounded by {}.
@@ -43,18 +43,34 @@
 # Note: because make also interpret ${} as variables, user must pass a double
 # dollar sign in order to set an environment variable.
 #
+# ### vt-vscode-concat-path(nl-list)
+#
+# Concatenate the NL separated list of directories and expand their environment
+# variables. Also append PATH to the end.
+#
+# Example:
+#
+# $${HOME}/bin becomes ${env:HOME}/bin;${env:PATH} (or : on Unix)
+#
+
+.ONESHELL:
+
+include $(TOP)/config.mk
 
 ifdef WIN32
-SEP = ;
+VT_SEP := ;
 else
-SEP = :
+VT_SEP := :
 endif
 
-.ONESHELL:
-concat-path = $(shell printf '$1' | sed '/^$$/d' | tr '\n' '$(SEP)' | sed 's,$(SEP)$$,,')
+define vt-concat-path =
+$(shell printf '$1' | sed '/^$$/d' | tr '\n' '$(VT_SEP)' | sed 's,$(VT_SEP)$$,,')
+endef
 
-.ONESHELL:
-vscode-expand-env = $(shell printf '$1' | sed -e 's,\$${,$${env:,g')
+define vt-vscode-expand-env =
+$(shell printf '$1' | sed -e 's,\$${,$${env:,g')
+endef
 
-.ONESHELL:
-vscode-concat-path = $(call vscode-expand-env,$(call concat-path,$1))
+define vt-vscode-concat-path =
+$(call vt-vscode-expand-env,$(call vt-concat-path,$1))$(VT_SEP)$${env:PATH}
+endef

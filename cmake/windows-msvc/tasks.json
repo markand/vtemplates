@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cmake: build",
+            "type": "cmake",
+            "command": "build",
+            "targets": [ "all" ],
+            "preset": "${command:cmake.activeBuildPresetName}",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            },
+            "problemMatcher": {
+                "fileLocation": [ "absolute" ],
+                "owner": "cpp",
+                "pattern": {
+                    "file": 1,
+                    "line": 2,
+                    "message": 4,
+                    "regexp": "^((?:[A-Z]:)?[^:]+)\\(([0-9]+)\\): (error|warning)[^:]+: (.*)",
+                    "severity": 3
+                },
+                "source": "cmake"
+            }
+        }
+    ]
+}

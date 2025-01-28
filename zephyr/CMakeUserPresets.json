@@ -8,7 +8,7 @@
     "configurePresets": [
         {
             "name": "zephyr",
-            "displayName": "Zephyr",
+            "displayName": "Zephyr (@BOARD@)",
             "binaryDir": "${sourceDir}/build",
             "generator": "@CMAKE_GENERATOR@",
             "cacheVariables": {
@@ -16,7 +16,7 @@
                 "NO_BUILD_TYPE_WARNING": "On"
             },
             "environment": {
-                "PATH": "@PATH@",
+                "PATH": "@ZEPHYR_PATH@",
                 "ZEPHYR_BASE": "@ZEPHYR_BASE@",
                 "ZEPHYR_SDK_INSTALL_DIR": "@ZEPHYR_SDK_INSTALL_DIR@"
             }

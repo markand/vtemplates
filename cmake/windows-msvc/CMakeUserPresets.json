@@ -12,7 +12,7 @@
             "binaryDir": "${sourceDir}/build",
             "generator": "@CMAKE_GENERATOR@",
             "environment": {
-                "PATH": "@MSVC_PATH@/bin;$penv{PATH}"
+                "PATH": "@MSVC_PATH@"
             },
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "cl.exe",

@@ -12,7 +12,7 @@
             "binaryDir": "${sourceDir}/build",
             "generator": "@CMAKE_GENERATOR@",
             "environment": {
-                "PATH": "@MINGW64_PATH@;$penv{PATH}"
+                "PATH": "@MINGW64_PATH@"
             },
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "@MINGW64_GXX@",

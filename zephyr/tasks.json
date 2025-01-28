@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "options": {
         "env": {
-            "PATH": "@PATH@",
+            "PATH": "@ZEPHYR_PATH@",
             "ZEPHYR_BASE": "@ZEPHYR_BASE@",
             "ZEPHYR_SDK_INSTALL_DIR": "@ZEPHYR_SDK_INSTALL_DIR@"
         }

@@ -132,12 +132,17 @@
 #
 # Defaults: $${HOME}/zephyr-sdk
 #
-# ### ZEPHYR_VENV
+# ### ZEPHYR_PATH
 #
-# Path to Zephyr python virtual environment.
+# Extra directories to be appended to PATH variable for tasks and launch
+# configurations.
 #
 # Defaults: $${HOME}/zephyrproject/.venv/bin     (Others)
 # Defaults: $${HOME}/zephyrproject/.venv/Scripts (Windows)
+#
+
+#
+# CMake
 #
 
 CMAKE_GENERATOR ?= Ninja
@@ -145,24 +150,35 @@ CMAKE_MINIMUM_MAJOR ?= 3
 CMAKE_MINIMUM_MINOR ?= 30
 CMAKE_MINIMUM_PATCH ?= 0
 
-ESP32_OPENOCD ?= esp32-openocd
-
-OPENOCD ?= openocd
+#
+# MinGW64
+#
 
 MINGW64_GCC ?= gcc.exe
 MINGW64_GDB ?= gdb.exe
 MINGW64_GXX ?= g++.exe
 MINGW64_PATH ?= C:/mingw64/bin
 
+#
+# MSVC
+#
+
 MSVC ?= C:/msvc/bin
+
+#
+# Zephyr
+#
 
 ZEPHYR_BASE ?= $${HOME}/zephyrproject/zephyr
 ZEPHYR_SDK_INSTALL_DIR ?= $${HOME}/zephyr-sdk
 
 ifeq ($(WIN32),1)
-ZEPHYR_VENV ?= $${HOME}/zephyrproject/.venv/Scripts
+ZEPHYR_PATH ?= $${HOME}/zephyrproject/.venv/Scripts
 else
-ZEPHYR_VENV ?= $${HOME}/zephyrproject/.venv/bin
+ZEPHYR_PATH ?= $${HOME}/zephyrproject/.venv/bin
 endif
+
+ESP32_OPENOCD ?= esp32-openocd
+OPENOCD ?= openocd
 
 -include $(TOP)/config.local.mk

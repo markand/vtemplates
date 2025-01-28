@@ -32,6 +32,6 @@ all: cmake-boilerplate
 	mkdir -p $(DISTDIR)/.vscode
 	sed < launch.json > $(DISTDIR)/.vscode/launch.json \
 		-e 's,@MINGW64_GDB@,$(MINGW64_GDB),g' \
-		-e 's,@MINGW64_PATH@,$(call vscode-concat-path,$(MINGW64_PATH)),g'
+		-e 's,@MINGW64_PATH@,$(call vt-vscode-concat-path,$(MINGW64_PATH)),g'
 
 include $(TOP)/mk/cmake.mk
