@@ -5,7 +5,7 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug (LLDB)",
-            "program": "${workspaceFolder}/build/hello",
+            "program": "${command:cmake.launchTargetPath}",
             "args": [],
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "cmake: build"
