@@ -1,5 +1,5 @@
 #
-# GNUmakefile -- subdirectory for CMake templates
+# GNUmakefile -- subdirectory for CMake common UNIX clang/gcc + lldb
 #
 # Copyright (c) 2025 David Demelier <markand@malikania.fr>
 #
@@ -16,8 +16,18 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-SUBDIRS = macos-clang windows-mingw64 unix windows-msvc
+TOP             = ../..
+DISTDIR         = $(TOP)/dist/cmake/unix
 
 .PHONY: all
 all:
-	for s in $(SUBDIRS); do $(MAKE) -C $$s || exit 1; done
+	mkdir -p $(DISTDIR)
+	cp CMakeLists.txt $(DISTDIR)
+	sed < CMakeUserPresets.json > $(DISTDIR)/CMakeUserPresets.json \
+		-e 's,@CMAKE_GENERATOR@,$(CMAKE_GENERATOR),g'
+	cp main.c $(DISTDIR)
+	mkdir -p $(DISTDIR)/.vscode
+	cp launch.json $(DISTDIR)/.vscode
+	cp tasks.json $(DISTDIR)/.vscode
+
+include $(TOP)/config.mk

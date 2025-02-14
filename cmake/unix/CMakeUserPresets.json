@@ -1,0 +1,59 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "clang-common",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build",
+            "generator": "@CMAKE_GENERATOR@",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "On"
+            }
+        },
+        {
+            "name": "gcc-common",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build",
+            "generator": "@CMAKE_GENERATOR@",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "On"
+            }
+        },
+        {
+            "name": "clang-debug",
+            "displayName": "clang (Debug)",
+            "inherits": "clang-common",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "clang-release",
+            "displayName": "clang (Release)",
+            "inherits": "clang-common",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "gcc-debug",
+            "displayName": "gcc (Debug)",
+            "inherits": "gcc-common",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "gcc-release",
+            "displayName": "gcc (Release)",
+            "inherits": "gcc-common",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ]
+}
